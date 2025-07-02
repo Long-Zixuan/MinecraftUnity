@@ -52,9 +52,14 @@ public class InventoryLogic : MonoBehaviour
         return null;
     }
 
-    public bool changeItemCount(InventoryItem item, int count)
+    public bool changeItemCount(InventoryItem item, int count,bool creatItemUI = false)
     {
         print("changeItemCount,item:"+item.itemName+",count:"+count);
+        if (!creatItemUI)
+        {
+            inventory_.changeItemCount(item, count);
+            return true;
+        }
         ItemUI itemUI = findItemUI(item);
         if (itemUI == null)
         {

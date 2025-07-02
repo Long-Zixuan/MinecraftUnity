@@ -71,7 +71,10 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
         if (eventData.pointerCurrentRaycast.gameObject == null)
         {
             GameObject player = GameObject.Find("Player");
-            Instantiate(item_.itemPrefab,player.transform.position,Quaternion.identity);
+            for (int i = 0; i < Convert.ToInt32(itemCountText_.text); i++)
+            {
+                Instantiate(item_.itemPrefab,player.transform.position,Quaternion.identity);
+            }
             inventoryLogic_.changeItemCount(item_,-Convert.ToInt32(itemCountText_.text));
             Destroy(gameObject);
             return;
