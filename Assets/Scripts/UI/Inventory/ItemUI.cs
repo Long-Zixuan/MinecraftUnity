@@ -97,78 +97,74 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
         }
         else if (eventData.pointerCurrentRaycast.gameObject.tag == "item")
         {
-            if(!isSingle_)
+
+            if (eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().item_ == item_)
             {
-                if (eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().item_ == item_)
-                {
-                    eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().ItemCount += ItemCount;
-                    Destroy(gameObject);
-                    return;
-                }
-                transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform.parent);
-                transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
-                eventData.pointerCurrentRaycast.gameObject.transform.SetParent(originParent_);
-                eventData.pointerCurrentRaycast.gameObject.transform.position = originParent_.transform.position;
-                if (eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_ !=
-                    inventoryLogic_)
-                {
-                    inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
-                    eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_
-                        .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
-                }
+                eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().ItemCount += ItemCount;
+                Destroy(gameObject);
+                return;
             }
-            else
+            if (isSingle_)
             {
                 moveFail();
+                return;
             }
+            transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform.parent);
+            transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
+            eventData.pointerCurrentRaycast.gameObject.transform.SetParent(originParent_);
+            eventData.pointerCurrentRaycast.gameObject.transform.position = originParent_.transform.position;
+            if (eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_ !=
+                inventoryLogic_)
+            {
+                inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
+                eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_
+                    .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
+            }
+
         }
 
         else if (eventData.pointerCurrentRaycast.gameObject.tag == "itemNumber")
         {
-            if(!isSingle_)
+
+            GameObject itemObj = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
+            if (itemObj.GetComponent<ItemUI>().item_ == item_)
             {
-                GameObject itemObj = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
-                if (itemObj.GetComponent<ItemUI>().item_ == item_)
-                {
-                    itemObj.GetComponent<ItemUI>().ItemCount += ItemCount;
-                    Destroy(gameObject);
-                }
-                transform.SetParent(itemObj.transform.parent);
-                transform.position = itemObj.transform.position;
-                itemObj.transform.SetParent(originParent_);
-                itemObj.transform.position = originParent_.transform.position;
-                if (itemObj.GetComponent<ItemUI>().inventoryLogic_ != inventoryLogic_)
-                {
-                    inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
-                    itemObj.GetComponent<ItemUI>().inventoryLogic_
-                        .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
-                }
+                itemObj.GetComponent<ItemUI>().ItemCount += ItemCount;
+                Destroy(gameObject);
+                return;
             }
-            else
+            if (isSingle_)
             {
                 moveFail();
+                return;
             }
+            transform.SetParent(itemObj.transform.parent);
+            transform.position = itemObj.transform.position;
+            itemObj.transform.SetParent(originParent_);
+            itemObj.transform.position = originParent_.transform.position;
+            if (itemObj.GetComponent<ItemUI>().inventoryLogic_ != inventoryLogic_)
+            {
+                inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
+                itemObj.GetComponent<ItemUI>().inventoryLogic_
+                    .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
+            }
+
         }
 
         else if (eventData.pointerCurrentRaycast.gameObject.tag == "BagSlots")
         {
-            //if(!isSingle_)
-            //{
+
             isSingle_ = false;
-                GameObject slot = eventData.pointerCurrentRaycast.gameObject;
-                transform.SetParent(slot.transform);
-                transform.position = slot.transform.position;
-                if (slot.GetComponent<InventorySlot>().inventoryLogic_ != inventoryLogic_)
-                {
-                    inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
-                    slot.GetComponent<InventorySlot>().inventoryLogic_
-                        .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
-                }
-            //}
-            //else
-            //{
-                //moveFail();
-            //}
+            GameObject slot = eventData.pointerCurrentRaycast.gameObject;
+            transform.SetParent(slot.transform);
+            transform.position = slot.transform.position;
+            if (slot.GetComponent<InventorySlot>().inventoryLogic_ != inventoryLogic_)
+            {
+                inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
+                slot.GetComponent<InventorySlot>().inventoryLogic_
+                    .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
+            }
+
         }
         else
         {
