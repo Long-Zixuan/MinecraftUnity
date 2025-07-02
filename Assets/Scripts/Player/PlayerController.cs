@@ -15,6 +15,12 @@ namespace UnityMC
     
     public class PlayerController : MonoBehaviour
     {
+        private bool canMove_ = true;
+
+        public bool CanMove
+        { 
+            set { canMove_ = value; }
+        }
         [Header("Inventory")]
         [SerializeField]
         protected Inventriy inventory_;
@@ -129,6 +135,10 @@ namespace UnityMC
 
         private void Update()
         {
+            if (!canMove_)
+            {
+                return;
+            }
             checkTargetBlock();
             // Movement input
             

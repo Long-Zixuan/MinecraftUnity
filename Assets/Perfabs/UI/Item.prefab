@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3556348077838948241}
   m_Layer: 5
   m_Name: Number
-  m_TagString: Untagged
+  m_TagString: itemNumber
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,9 +92,10 @@ GameObject:
   - component: {fileID: 3556348078414076082}
   - component: {fileID: 3556348078414076081}
   - component: {fileID: 508607856721104184}
+  - component: {fileID: 8356312682726570529}
   m_Layer: 5
   m_Name: Item
-  m_TagString: Untagged
+  m_TagString: item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,3 +173,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemCountText_: {fileID: 3556348077838948241}
   itemIcon_: {fileID: 3556348078414076081}
+  item_: {fileID: 0}
+--- !u!225 &8356312682726570529
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3556348078414076046}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

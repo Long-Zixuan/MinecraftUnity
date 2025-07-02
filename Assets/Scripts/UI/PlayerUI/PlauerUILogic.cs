@@ -3,27 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlauerUILogic : MonoBehaviour
+namespace UnityMC
 {
-    [FormerlySerializedAs("inventoryUI")] public GameObject inventoryWindow;
-    // Start is called before the first frame update
-    void Start()
+    public class PlauerUILogic : MonoBehaviour
     {
-        
-    }
+        public PlayerController playerController_;
 
-    // Update is called once per frame
-    void Update()
-    {
-        openAndOffInventoryUI();
-    }
+        [FormerlySerializedAs("inventoryUI")] public GameObject inventoryWindow;
 
-    void openAndOffInventoryUI()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
+        // Start is called before the first frame update
+        void Start()
         {
-            inventoryWindow.SetActive(!inventoryWindow.activeSelf);
+
         }
+
+        // Update is called once per frame
+        void Update()
+        {
+            openAndOffInventoryUI();
+        }
+
+        void openAndOffInventoryUI()
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                inventoryWindow.SetActive(!inventoryWindow.activeSelf);
+                Cursor.visible = inventoryWindow.activeSelf;
+                playerController_.CanMove = !inventoryWindow.activeSelf;
+                if (!inventoryWindow.activeSelf)
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+                else
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                }
+            }
+        }
+
     }
-    
 }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
+    public InventoryLogic inventoryLogic_;
+    
     public ItemUI itemUIPre_;
 
     public ItemUI Item
@@ -33,8 +35,9 @@ public class InventorySlot : MonoBehaviour
 
     public void creatItemUI(InventoryItem item)
     {
-        itemUIPre_ = Instantiate(itemUIPre_,transform);
-        itemUIPre_.item_ = item;
+        ItemUI itemUI = Instantiate(itemUIPre_,transform);
+        itemUI.item_ = item;
+        itemUI.inventoryLogic_ = inventoryLogic_;
     }
 
     public void updateSelf(Dictionary<InventoryItem,int> items)

@@ -34,6 +34,20 @@ public class InventoryLogic : MonoBehaviour
         return false;
     }
 
+    public void minusItemCount(InventoryItem item, int count)
+    {
+        inventory_.Items[item] -= count;
+    }
+
+    public void plusItemCount(InventoryItem item, int count)
+    {
+        if (!inventory_.Items.ContainsKey(item))
+        {
+            creatNewItem(item);
+        }
+       inventory_.Items[item] += count; 
+    }
+
     
 
     public void updateInventory()

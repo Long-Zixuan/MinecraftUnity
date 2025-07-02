@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Block
   - BlockFace
+  - item
+  - BagSlots
+  - CraftingSlots
+  - itemNumber
+  - UI
   layers:
   - Default
   - TransparentFX
