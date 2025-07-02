@@ -19,43 +19,67 @@ public class InventoryLogic : MonoBehaviour
         
     }
     
-    public bool creatNewItem(InventoryItem item)
+    private bool creatNewItem(InventoryItem item,int count)
     {
         for (int i = 0; i < Grid.transform.childCount; i++)
         {
             InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
-            if (slot.Item == null)
+            if (slot.ItemUi == null)
             {
-                slot.creatItemUI(item);
-                slot.updateSelf(inventory_.Items);
+                slot.creatItemUI(item,count);
+                slot.updateSelf();
                 return true;
             }
         }
         return false;
     }
 
-    public void minusItemCount(InventoryItem item, int count)
+    
+    private ItemUI findItemUI(InventoryItem item)
     {
-        inventory_.Items[item] -= count;
+        for (int i = 0; i < Grid.transform.childCount; i++)
+        {
+            InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
+            if (slot == null || slot.ItemUi == null)
+            {
+                continue;
+            }
+            if (slot.ItemUi.item_ == item)
+            {
+                return slot.ItemUi;
+            }
+        }
+        return null;
     }
 
-    public void plusItemCount(InventoryItem item, int count)
+    public bool changeItemCount(InventoryItem item, int count)
     {
-        if (!inventory_.Items.ContainsKey(item))
+        print("changeItemCount,item:"+item.itemName+",count:"+count);
+        ItemUI itemUI = findItemUI(item);
+        if (itemUI == null)
         {
-            creatNewItem(item);
+            if (creatNewItem(item,count))
+            {
+                inventory_.changeItemCount(item, count);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-       inventory_.Items[item] += count; 
+        itemUI.ItemCount += count;
+        inventory_.changeItemCount(item, count);
+        return true;
     }
 
     
-
     public void updateInventory()
     {
         for (int i = 0; i < Grid.transform.childCount; i++)
         {
             InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
-            slot.updateSelf(inventory_.Items);
+            slot.updateSelf();
         }
     }
     

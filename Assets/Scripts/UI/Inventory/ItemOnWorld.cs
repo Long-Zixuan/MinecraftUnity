@@ -8,7 +8,7 @@ public class ItemOnWorld : MonoBehaviour
 {
     [SerializeField]
     protected InventoryItem item_;
-    protected Inventriy inventory_;
+    protected InventoryLogic inventoryLogic_;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +25,8 @@ public class ItemOnWorld : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            inventory_ = other.gameObject.GetComponent<PlayerController>().Inventory;
-            if (inventory_.addItem(item_))
+            inventoryLogic_ = other.gameObject.GetComponent<PlayerController>().InventoryLogic;
+            if (inventoryLogic_.changeItemCount(item_,1))
             {
                 Destroy(gameObject);
             }

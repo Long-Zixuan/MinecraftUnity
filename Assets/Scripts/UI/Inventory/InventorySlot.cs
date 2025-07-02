@@ -10,7 +10,7 @@ public class InventorySlot : MonoBehaviour
     
     public ItemUI itemUIPre_;
 
-    public ItemUI Item
+    public ItemUI ItemUi
     {
         get
         {
@@ -33,18 +33,19 @@ public class InventorySlot : MonoBehaviour
         
     }
 
-    public void creatItemUI(InventoryItem item)
+    public void creatItemUI(InventoryItem item,int count)
     {
         ItemUI itemUI = Instantiate(itemUIPre_,transform);
         itemUI.item_ = item;
+        itemUI.ItemCount = count;
         itemUI.inventoryLogic_ = inventoryLogic_;
     }
 
-    public void updateSelf(Dictionary<InventoryItem,int> items)
+    public void updateSelf()
     {
         if (transform.childCount > 0)
         {
-            gameObject.transform.GetChild(0).GetComponent<ItemUI>().updateSelf(items);
+            gameObject.transform.GetChild(0).GetComponent<ItemUI>().updateSelf();
         }
     }
     

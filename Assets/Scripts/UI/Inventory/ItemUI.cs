@@ -14,6 +14,12 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
     public Image itemIcon_;
     
     public InventoryItem item_;
+
+    public int ItemCount
+    {
+        get => Convert.ToInt32(itemCountText_.text);
+        set => itemCountText_.text = value.ToString();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -26,23 +32,21 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
         
     }
     
-    public void updateSelf(Dictionary<InventoryItem,int> items)
+    public void updateSelf()
     {
         begin:if(item_ == null)
         {
             Destroy(gameObject);
             return;
         }
-        if (items[item_] <= 0)
+        if (Convert.ToInt32(itemCountText_.text) <= 0)
         {
             item_ = null;
             goto begin;
         }
-        
         itemCountText_.enabled = true;
         itemIcon_.color = new Color(1,1,1,1.0f);
         itemIcon_.sprite = item_.itemIcon;
-        itemCountText_.text = items[item_].ToString();
     }
 
     private Transform originParent_;
@@ -66,8 +70,9 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
     {
         if (eventData.pointerCurrentRaycast.gameObject == null)
         {
-            //还差一个创建掉落物的逻辑
-            inventoryLogic_.minusItemCount(item_,Convert.ToInt32(itemCountText_.text));
+            GameObject player = GameObject.Find("Player");
+            Instantiate(item_.itemPrefab,player.transform.position,Quaternion.identity);
+            inventoryLogic_.changeItemCount(item_,-Convert.ToInt32(itemCountText_.text));
             Destroy(gameObject);
             return;
         }
@@ -79,8 +84,8 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
             eventData.pointerCurrentRaycast.gameObject.transform.position = originParent_.transform.position;
             if (eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_ != inventoryLogic_)
             {
-                inventoryLogic_.minusItemCount(item_,Convert.ToInt32(itemCountText_.text));
-                eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_.plusItemCount(item_, Convert.ToInt32(itemCountText_.text));
+                inventoryLogic_.changeItemCount(item_,-Convert.ToInt32(itemCountText_.text));
+                eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_.changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
             }
         }
 
@@ -93,8 +98,8 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
             item.transform.position = originParent_.transform.position;
             if (item.GetComponent<ItemUI>().inventoryLogic_ != inventoryLogic_)
             {
-                inventoryLogic_.minusItemCount(item_,Convert.ToInt32(itemCountText_.text));
-                item.GetComponent<ItemUI>().inventoryLogic_.plusItemCount(item_, Convert.ToInt32(itemCountText_.text));
+                inventoryLogic_.changeItemCount(item_,-Convert.ToInt32(itemCountText_.text));
+                item.GetComponent<ItemUI>().inventoryLogic_.changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
             }
         }
 
@@ -105,8 +110,8 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
             transform.position = slot.transform.position;
             if (slot.GetComponent<InventorySlot>().inventoryLogic_ != inventoryLogic_)
             {
-                inventoryLogic_.minusItemCount(item_,Convert.ToInt32(itemCountText_.text));
-                slot.GetComponent<InventorySlot>().creatItemUI(item_);
+                inventoryLogic_.changeItemCount(item_,-Convert.ToInt32(itemCountText_.text));
+                slot.GetComponent<InventorySlot>().inventoryLogic_.changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
             }
         }
         else

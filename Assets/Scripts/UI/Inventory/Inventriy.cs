@@ -8,7 +8,7 @@ using UnityEngine;
 public class Inventriy : ScriptableObject
 {
     protected Dictionary<InventoryItem,int> items_ = new Dictionary<InventoryItem, int>();
-    public Dictionary<InventoryItem,int> Items { get { return items_; } }
+    //public Dictionary<InventoryItem,int> Items { get { return items_; } }
 
     public string inLogicName;
     // Start is called before the first frame update
@@ -23,7 +23,7 @@ public class Inventriy : ScriptableObject
         
     }
 
-    public bool addItem(InventoryItem item)
+    /*public bool addItem(InventoryItem item)
     {
        
         if (items_.ContainsKey(item))
@@ -38,5 +38,19 @@ public class Inventriy : ScriptableObject
         GameObject.Find(inLogicName).GetComponent<InventoryLogic>().updateInventory();
         Debug.Log("Adding item:"+item.itemName+":"+items_[ item]);
        return true;
+    }*/
+
+    public void changeItemCount(InventoryItem item, int count)
+    {
+        if (items_.ContainsKey(item))
+        {
+            items_[item] += count;
+        }
+        else
+        {
+            items_.Add(item, count);
+        }
     }
+    
+    
 }

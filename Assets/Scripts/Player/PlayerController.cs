@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using ECM2;
 using UnityEditor;
+using UnityEngine.Serialization;
 
 namespace UnityMC
 {
@@ -21,12 +22,13 @@ namespace UnityMC
         { 
             set { canMove_ = value; }
         }
+        [FormerlySerializedAs("inventory_")]
         [Header("Inventory")]
         [SerializeField]
-        protected Inventriy inventory_;
-        public Inventriy Inventory
+        protected InventoryLogic inventoryLogic_;
+        public InventoryLogic InventoryLogic
         {
-            get { return inventory_; }
+            get { return inventoryLogic_; }
         }
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow.")]
