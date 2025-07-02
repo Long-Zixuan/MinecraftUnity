@@ -246,7 +246,7 @@ MonoBehaviour:
     type: 3}
   brokenSound: {fileID: 0}
   breakingSound: {fileID: 0}
-  drop_: {fileID: 8459711182257583488, guid: 173a19f1034a5d841bb017e53826623d, type: 3}
+  drop_: {fileID: 0}
 --- !u!1 &2868492068330958838
 GameObject:
   m_ObjectHideFlags: 0
