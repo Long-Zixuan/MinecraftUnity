@@ -23,22 +23,7 @@ public class Inventriy : ScriptableObject
         
     }
 
-    /*public bool addItem(InventoryItem item)
-    {
-       
-        if (items_.ContainsKey(item))
-        {
-            items_[item]++;
-        }
-        else
-        {
-            items_.Add(item, 1);
-            return GameObject.Find(inLogicName).GetComponent<InventoryLogic>().creatNewItem(item);
-        }
-        GameObject.Find(inLogicName).GetComponent<InventoryLogic>().updateInventory();
-        Debug.Log("Adding item:"+item.itemName+":"+items_[ item]);
-       return true;
-    }*/
+
 
     public void changeItemCount(InventoryItem item, int count)
     {

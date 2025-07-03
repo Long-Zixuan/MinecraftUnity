@@ -52,9 +52,9 @@ public class InventoryLogic : MonoBehaviour
         return null;
     }
 
-    public bool changeItemCount(InventoryItem item, int count,bool creatItemUI = false)
+    public virtual bool changeItemCount(InventoryItem item, int count,bool creatItemUI = false)
     {
-        print("changeItemCount,item:"+item.itemName+",count:"+count);
+        print("changeItemCount"+gameObject.name+"item:"+item.itemName+",count:"+count);
         if (!creatItemUI)
         {
             inventory_.changeItemCount(item, count);

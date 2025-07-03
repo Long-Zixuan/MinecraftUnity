@@ -16,3 +16,15 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: bd759624254878043961e617ee54101f, type: 3}
   itemPrefab: {fileID: 8459711182257583489, guid: 173a19f1034a5d841bb017e53826623d,
     type: 3}
+  recips:
+    C1_1: {fileID: 0}
+    C1_2: {fileID: 0}
+    C1_3: {fileID: 0}
+    C2_1: {fileID: 0}
+    C2_2: {fileID: 0}
+    C2_3: {fileID: 0}
+    C3_1: {fileID: 0}
+    C3_2: {fileID: 0}
+    C3_3: {fileID: 0}
+    count: 0
+  canCrafting: 0
