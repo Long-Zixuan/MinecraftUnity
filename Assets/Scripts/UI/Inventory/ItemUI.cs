@@ -73,6 +73,7 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
        
         transform.position = eventData.position;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
+        inventoryLogic_.itemLeave( this);
     }
     
     
@@ -119,7 +120,9 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
                 inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
                 eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_
                     .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
+                inventoryLogic_ = eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemUI>().inventoryLogic_;
             }
+            inventoryLogic_.itemJoin( this);
 
         }
 
@@ -147,7 +150,9 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
                 inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
                 itemObj.GetComponent<ItemUI>().inventoryLogic_
                     .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
+                inventoryLogic_ = itemObj.GetComponent<ItemUI>().inventoryLogic_;
             }
+            inventoryLogic_.itemJoin(this);
 
         }
 
@@ -163,7 +168,9 @@ public class ItemUI : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandl
                 inventoryLogic_.changeItemCount(item_, -Convert.ToInt32(itemCountText_.text));
                 slot.GetComponent<InventorySlot>().inventoryLogic_
                     .changeItemCount(item_, Convert.ToInt32(itemCountText_.text));
+                inventoryLogic_ = slot.GetComponent<InventorySlot>().inventoryLogic_;
             }
+            inventoryLogic_.itemJoin(this);
 
         }
         else

@@ -234,12 +234,12 @@ namespace UnityMC
             {
                 if (clickedBlock_ != null)
                 {
-                    clickedBlock_.OnBlockHover();
+                    clickedBlock_.OnBlockDisSelected();
                 }
 
                 if (targetBlock != null)
                 {
-                    targetBlock.OnBlockClicked();
+                    targetBlock.OnBlockSelected();
                 }
                 clickedBlock_ = targetBlock;
             }

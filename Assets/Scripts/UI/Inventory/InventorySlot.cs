@@ -33,12 +33,14 @@ public class InventorySlot : MonoBehaviour
         
     }
 
-    public void creatItemUI(InventoryItem item,int count)
+    public ItemUI creatItemUI(InventoryItem item,int count)
     {
         ItemUI itemUI = Instantiate(itemUIPre_,transform);
         itemUI.item_ = item;
         itemUI.ItemCount = count;
         itemUI.inventoryLogic_ = inventoryLogic_;
+        itemUI.updateSelf();
+        return itemUI;
     }
 
     public void updateSelf()

@@ -28,15 +28,15 @@ public class BaseBlock : MonoBehaviour
         
     }
 
-    public virtual void OnBlockClicked()
+    public virtual void OnBlockSelected()
     {
-        print("Clicked:"+gameObject.name);
+        print("selected:"+gameObject.name);
     }
     
-    public virtual void OnBlockHover()
+    public virtual void OnBlockDisSelected()
     {
         breakingTimer_ = 0;
-        print("Hover:"+gameObject.name);
+        print("Dis selected:"+gameObject.name);
     }
 
     public virtual void tryBreak()

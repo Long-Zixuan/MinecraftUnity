@@ -88,4 +88,14 @@ public class InventoryLogic : MonoBehaviour
         }
     }
     
+    public virtual void itemJoin(ItemUI itemUI)
+    {
+        
+    }
+
+    public virtual void itemLeave(ItemUI itemUI)
+    {
+        
+    }
+
 }
