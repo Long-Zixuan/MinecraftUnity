@@ -20,3 +20,6 @@ MonoBehaviour:
     items: []
     count: 0
   canCrafting: 0
+  toggleable: 1
+  togglePrefab: {fileID: 2820103574259955513, guid: 2cbd2cc184651524bb7563aa372fb057,
+    type: 3}

@@ -55,4 +55,6 @@ public class InventoryItem : ScriptableObject
 
     public bool canCrafting = true;
     //public int itemCount;
+    public bool toggleable = false;
+    public GameObject togglePrefab;
 }

@@ -17,14 +17,18 @@ MonoBehaviour:
   itemPrefab: {fileID: 8459711182257583489, guid: 6e916f7295d9a1941b0cb0b50322ad8a,
     type: 3}
   recips:
-    C1_1: {fileID: 0}
-    C1_2: {fileID: 0}
-    C1_3: {fileID: 0}
-    C2_1: {fileID: 0}
-    C2_2: {fileID: 0}
-    C2_3: {fileID: 0}
-    C3_1: {fileID: 0}
-    C3_2: {fileID: 0}
-    C3_3: {fileID: 0}
+    items:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     count: 0
   canCrafting: 0
+  toggleable: 1
+  togglePrefab: {fileID: 5018564278199218968, guid: 843acf9ad83c5e34faecb2e1816c4b6f,
+    type: 3}

@@ -29,3 +29,6 @@ MonoBehaviour:
     - {fileID: 0}
     count: 4
   canCrafting: 1
+  toggleable: 1
+  togglePrefab: {fileID: 5849220019492750586, guid: e39496251e3ddbc48a266ba68761ec34,
+    type: 3}

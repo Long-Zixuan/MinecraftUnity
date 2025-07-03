@@ -19,7 +19,7 @@ public class InventoryLogic : MonoBehaviour
         
     }
     
-    private bool creatNewItem(InventoryItem item,int count)
+    protected virtual bool creatNewItem(InventoryItem item,int count)
     {
         for (int i = 0; i < Grid.transform.childCount; i++)
         {
@@ -35,7 +35,7 @@ public class InventoryLogic : MonoBehaviour
     }
 
     
-    private ItemUI findItemUI(InventoryItem item)
+    protected virtual ItemUI findItemUI(InventoryItem item)
     {
         for (int i = 0; i < Grid.transform.childCount; i++)
         {
@@ -52,7 +52,7 @@ public class InventoryLogic : MonoBehaviour
         return null;
     }
 
-    public virtual bool changeItemCount(InventoryItem item, int count,bool creatItemUI = false)
+    public bool changeItemCount(InventoryItem item, int count,bool creatItemUI = false)
     {
         print("changeItemCount"+gameObject.name+"item:"+item.itemName+",count:"+count);
         if (!creatItemUI)
@@ -75,11 +75,12 @@ public class InventoryLogic : MonoBehaviour
         }
         itemUI.ItemCount += count;
         inventory_.changeItemCount(item, count);
+        updateInventory();
         return true;
     }
 
     
-    public void updateInventory()
+    public virtual void updateInventory()
     {
         for (int i = 0; i < Grid.transform.childCount; i++)
         {
@@ -90,12 +91,12 @@ public class InventoryLogic : MonoBehaviour
     
     public virtual void itemJoin(ItemUI itemUI)
     {
-        
+        updateInventory();
     }
 
     public virtual void itemLeave(ItemUI itemUI)
     {
-        
+        updateInventory();
     }
 
 }

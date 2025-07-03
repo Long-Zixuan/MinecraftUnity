@@ -25,7 +25,7 @@ namespace UnityMC
         [FormerlySerializedAs("inventory_")]
         [Header("Inventory")]
         [SerializeField]
-        protected InventoryLogic inventoryLogic_;
+        protected PlayerInventoryLogic inventoryLogic_;
         public InventoryLogic InventoryLogic
         {
             get { return inventoryLogic_; }
@@ -208,13 +208,28 @@ namespace UnityMC
         
         void tryToggleItem()
         {
-            if (clickedBlock_)
+            if (clickedBlock_ && Vector3.Distance(clickedBlock_.transform.position,transform.position) > 1.6f)
             {
                 Vector3 hitDir = targetRaycastHit.point - clickedBlock_.transform.position;
                 Vector3 offect = newBlockOffect(hitDir);
 
-                Instantiate(clickedBlock_.drop_, clickedBlock_.transform.position + offect,
+                GameObject item = inventoryLogic_.quickBarGrid.transform.GetChild(0).gameObject;
+                InventorySlot slots = item.GetComponent<InventorySlot>();
+                if (slots == null)
+                {
+                    return;
+                }
+
+                if (!slots.ItemUi.item_.toggleable)
+                {
+                    return;
+                }
+                
+                Instantiate(slots.ItemUi.item_.togglePrefab, clickedBlock_.transform.position + offect,
                     Quaternion.identity);//Test
+                inventoryLogic_.changeItemCount(slots.ItemUi.item_, -1);
+                slots.ItemUi.ItemCount -= 1;
+                inventoryLogic_.updateInventory();
             }
         }
 
