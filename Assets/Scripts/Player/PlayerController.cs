@@ -197,7 +197,7 @@ namespace UnityMC
 
             if (Input.GetButtonDown("Fire2"))
             {
-                tryPutBlock();
+                tryToggleItem();
             }
         }
 
@@ -206,9 +206,55 @@ namespace UnityMC
             if(clickedBlock_!=null){clickedBlock_.tryBreak();}
         }
         
-        void tryPutBlock()
+        void tryToggleItem()
         {
-            
+            if (clickedBlock_)
+            {
+                Vector3 hitDir = targetRaycastHit.point - clickedBlock_.transform.position;
+                Vector3 offect = newBlockOffect(hitDir);
+
+                Instantiate(clickedBlock_.drop_, clickedBlock_.transform.position + offect,
+                    Quaternion.identity);//Test
+            }
+        }
+
+        Vector3 newBlockOffect(Vector3 vec3)
+        {
+            print("Dir:"+vec3);
+            float[] vals = new float[3];
+            vals[0] = vec3.x;
+            vals[1] = vec3.y;
+            vals[2] = vec3.z;
+            float biggestVal = Mathf.Abs(vals[0]);
+            float biggestValDir = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                if (Mathf.Abs(vals[i]) > biggestVal)
+                {
+                    biggestVal = Mathf.Abs(vals[i]);
+                    biggestValDir = i;
+                }
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (i == biggestValDir)
+                {
+                    if (vals[i] > 0)
+                    {
+                        vals[i] = 1;
+                    }
+                    else
+                    {
+                        vals[i] = -1;
+                    }
+                }
+                else
+                {
+                    vals[i] = 0;
+                }
+            }
+            return new Vector3(vals[0], vals[1], vals[2]);
         }
         
         void checkTargetBlock() {
