@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Crafting
   m_EditorClassIdentifier: 
   items_:
-  - item_: {fileID: 0}
-    count_: 0
+  - item_: {fileID: 11400000, guid: 47f8a4965a0b8634f9bfcce60f909c52, type: 2}
+    count_: 5
   - item_: {fileID: 0}
     count_: 0
   - item_: {fileID: 0}

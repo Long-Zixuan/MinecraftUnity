@@ -19,8 +19,12 @@ namespace UnityMC
         private bool canMove_ = true;
 
         public bool CanMove
-        { 
-            set { canMove_ = value; }
+        {
+            set
+            {
+                character_.SetMovementDirection(Vector3.zero);
+                canMove_ = value;
+            }
         }
         [FormerlySerializedAs("inventory_")]
         [Header("Inventory")]

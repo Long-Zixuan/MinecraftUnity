@@ -13,22 +13,21 @@ MonoBehaviour:
   m_Name: Boat
   m_EditorClassIdentifier: 
   itemName: "\u8239"
-  itemIcon: {fileID: 21300000, guid: dbe3b0158998af24a8c1e2c9493159e6, type: 3}
+  itemIcon: {fileID: 21300000, guid: 945dfa2aa75364e4fa952c9e40df69cd, type: 3}
   itemPrefab: {fileID: 8459711182257583489, guid: 79bf54c449bb7ef4c8e62ed4fc0366a6,
     type: 3}
   recips:
     items:
-    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
+    - {fileID: 11400000, guid: 47f8a4965a0b8634f9bfcce60f909c52, type: 2}
     - {fileID: 0}
-    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
-    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
-    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
-    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
+    - {fileID: 11400000, guid: 47f8a4965a0b8634f9bfcce60f909c52, type: 2}
+    - {fileID: 11400000, guid: 47f8a4965a0b8634f9bfcce60f909c52, type: 2}
+    - {fileID: 11400000, guid: 47f8a4965a0b8634f9bfcce60f909c52, type: 2}
+    - {fileID: 11400000, guid: 47f8a4965a0b8634f9bfcce60f909c52, type: 2}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    count: 4
+    count: 1
   canCrafting: 1
-  toggleable: 1
-  togglePrefab: {fileID: 5849220019492750586, guid: e39496251e3ddbc48a266ba68761ec34,
-    type: 3}
+  toggleable: 0
+  togglePrefab: {fileID: 0}

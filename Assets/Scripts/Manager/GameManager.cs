@@ -7,9 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public InventoryItem[] items;
 
-    private GameObject player;
+    [SerializeField]
+    private PlayerController player;
 
-    public GameObject Player
+    public PlayerController Player
     {
         get
         {
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return playerUIManager.HadUIOpen == false;
+            return playerUIManager.HadPlauerUIOpen == false;
         }
     }
     

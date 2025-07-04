@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PlayerBag
   m_EditorClassIdentifier: 
   items_:
-  - item_: {fileID: 0}
-    count_: 0
-  - item_: {fileID: 0}
-    count_: 0
+  - item_: {fileID: 11400000, guid: bd2249c3bf47c6744931ef179f6d518e, type: 2}
+    count_: 1
+  - item_: {fileID: 11400000, guid: bf982bed683fecd4fb1731d4492e65fb, type: 2}
+    count_: 2
   - item_: {fileID: 0}
     count_: 0
   - item_: {fileID: 0}

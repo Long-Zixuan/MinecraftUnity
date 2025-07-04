@@ -330,7 +330,7 @@ MonoBehaviour:
   brokenSound: {fileID: 0}
   breakingSound: {fileID: 0}
   drop_: {fileID: 8459711182257583488, guid: 7ee20004adda8574597f47208196db6f, type: 3}
-  uiTag: CraftingUI
+  uiType_: 1
 --- !u!1 &6419600816764852723
 GameObject:
   m_ObjectHideFlags: 0

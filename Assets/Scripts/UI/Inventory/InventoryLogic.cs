@@ -115,9 +115,9 @@ public class InventoryLogic : BaseUILogic
         updateInventory();
     }
 
-    public override void onOpen()
+    public override void onOpen(IUi parent)
     {
         updateInventory();
-        base.onOpen();
+        base.onOpen(parent);
     }
 }
