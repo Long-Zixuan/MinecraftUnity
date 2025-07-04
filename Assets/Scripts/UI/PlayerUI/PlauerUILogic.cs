@@ -27,6 +27,7 @@ namespace UnityMC
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                playerController_.InventoryLogic.updateInventory();
                 inventoryWindow.SetActive(!inventoryWindow.activeSelf);
                 Cursor.visible = inventoryWindow.activeSelf;
                 playerController_.CanMove = !inventoryWindow.activeSelf;

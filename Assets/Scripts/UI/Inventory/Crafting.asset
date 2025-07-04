@@ -12,4 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f0d018396668f4d96067075ecd3358, type: 3}
   m_Name: Crafting
   m_EditorClassIdentifier: 
-  inLogicName: 
+  items_:
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0
+  - item_: {fileID: 0}
+    count_: 0

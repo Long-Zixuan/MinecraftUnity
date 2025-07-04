@@ -44,7 +44,7 @@ public class Recips
         return true;
     }
 }
-
+[System.Serializable]
 [CreateAssetMenu(fileName = "New MC Inventory Item", menuName = "MCInventory/Item")]
 public class InventoryItem : ScriptableObject
 {

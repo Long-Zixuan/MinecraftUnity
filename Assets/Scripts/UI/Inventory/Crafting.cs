@@ -12,23 +12,36 @@ public class Crafting : InventoryLogic
     
     private Recips recip = new Recips() ;
 
-    void Start()
+    new void Awake()
     {
+        base.Awake();
+    }
+    new void Start()
+    {
+        base.Start();
         getItem();
+    }
+
+    protected override void initSlots()
+    {
+        base.initSlots();
+        slots.Add(resSlot);
+        resSlot.Index = 9;
     }
 
     public void getItem()
     {
         for (int i = 0; i < 9; i++)
         {
-            InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
+            /*InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
 
             if (slot == null || slot.ItemUi == null)
             {
                 recip.items[i] = null;
                 continue;
             }
-            recip.items[i] = Grid.transform.GetChild(i).GetComponent<InventorySlot>().ItemUi.item_;
+            recip.items[i] = Grid.transform.GetChild(i).GetComponent<InventorySlot>().ItemUi.Item;*/
+            recip.items[i] = getItemData(i).Item;
         }
     }
 
@@ -36,14 +49,15 @@ public class Crafting : InventoryLogic
     {
         for (int i = 0; i < 9; i++)
         {
-            InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
-            if (slot == null || slot.ItemUi == null)
+            InventorySlot slot = slots[i];
+            if (slot.IsInventoryNull || slot.Data.Item == null)
             {
                 continue;
             }
-            changeItemCount(slot.ItemUi.item_, -count);
-            slot.ItemUi.ItemCount -= count;
-            slot.updateSelf();
+            slot.updateInventoryData(slot.Data.Item, slot.Data.Count - count);
+            //changeItemCount(slot.ItemUi.Item, -count);
+            //slot.ItemUi.ItemCount -= count;
+            //slot.updateSelf();
         }
     }
 
@@ -68,16 +82,13 @@ public class Crafting : InventoryLogic
 
             if (item.recips.isSame(recip))
             {
-                resItem = resSlot.creatItemUI(item, item.recips.count);
+                resSlot.updateInventoryData(item, item.recips.count);
                 //print(item.itemName);
                 return;
             }
         }
 
-        if (resSlot.transform.childCount > 0)
-        {
-            Destroy(resSlot.transform.GetChild(0).gameObject);
-        }
+        resSlot.updateInventoryData(null, 0);
     }
 
     void Update()
@@ -85,24 +96,13 @@ public class Crafting : InventoryLogic
         //craft();
     }
     
-    public override void itemJoin(ItemUI itemUI)
+    public override void itemJoin(InventorySlot slot)
     {
-        if (itemUI == resItem)
-        {
-            //Destroy(itemUI.gameObject);
-            return;
-        }
         craft();
     }
 
-    public override void itemLeave(ItemUI itemUI)
+    public override void itemLeave(InventorySlot slot)
     {
-        if (itemUI == resItem)
-        {
-            print("res itemLeave");
-            minsItemInCrafting(itemUI.ItemCount / itemUI.item_.recips.count);
-            //return;
-        }
         craft();
     }
     

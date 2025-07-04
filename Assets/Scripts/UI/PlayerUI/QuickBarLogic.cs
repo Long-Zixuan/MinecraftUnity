@@ -28,11 +28,11 @@ public class QuickBarLogic : MonoBehaviour
                 Destroy(selfSlot.transform.GetChild(0).gameObject);
             }
 
-            if (othSlot.ItemUi == null)
+            if (othSlot.Data.Item == null)
             {
                 return;
             }
-            selfSlot.creatItemUI(othSlot.ItemUi.item_, othSlot.ItemUi.ItemCount);
+            selfSlot.creatItemUI(othSlot.Data.Item, othSlot.Data.Count);
         }
     }
     

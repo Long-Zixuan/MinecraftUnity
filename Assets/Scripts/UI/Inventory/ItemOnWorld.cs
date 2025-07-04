@@ -26,7 +26,7 @@ public class ItemOnWorld : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             inventoryLogic_ = other.gameObject.GetComponent<PlayerController>().InventoryLogic;
-            if (inventoryLogic_.changeItemCount(item_,1,true))
+            if (inventoryLogic_.addItem(new ItemData(item_, 1)))
             {
                 Destroy(gameObject);
             }
@@ -37,8 +37,9 @@ public class ItemOnWorld : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            print("OnCollisionEnter Player");
             inventoryLogic_ = other.gameObject.GetComponent<PlayerController>().InventoryLogic;
-            if (inventoryLogic_.changeItemCount(item_,1,true))
+            if (inventoryLogic_.addItem(new ItemData(item_, 1)))
             {
                 Destroy(gameObject);
             }

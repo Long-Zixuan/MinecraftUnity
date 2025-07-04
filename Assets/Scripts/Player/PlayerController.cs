@@ -213,22 +213,23 @@ namespace UnityMC
                 Vector3 hitDir = targetRaycastHit.point - clickedBlock_.transform.position;
                 Vector3 offect = newBlockOffect(hitDir);
 
-                GameObject item = inventoryLogic_.quickBarGrid.transform.GetChild(0).gameObject;
-                InventorySlot slots = item.GetComponent<InventorySlot>();
-                if (slots == null)
+               
+                InventorySlot slots = inventoryLogic_.Slots[0];
+                if (slots.Data.Item == null)
                 {
                     return;
                 }
 
-                if (!slots.ItemUi.item_.toggleable)
+                if (!slots.Data.Item.toggleable)
                 {
                     return;
                 }
                 
-                Instantiate(slots.ItemUi.item_.togglePrefab, clickedBlock_.transform.position + offect,
+                Instantiate(slots.Data.Item.togglePrefab, clickedBlock_.transform.position + offect,
                     Quaternion.identity);//Test
-                inventoryLogic_.changeItemCount(slots.ItemUi.item_, -1);
-                slots.ItemUi.ItemCount -= 1;
+                //inventoryLogic_.changeItemCount(0,new ItemData(slots.Data.Item,slots.Data.Count - 1));
+                
+                slots.updateInventoryData(slots.Data.Item,slots.Data.Count - 1);
                 inventoryLogic_.updateInventory();
             }
         }

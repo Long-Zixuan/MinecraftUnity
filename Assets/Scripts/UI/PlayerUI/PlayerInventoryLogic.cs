@@ -8,10 +8,40 @@ public class PlayerInventoryLogic : InventoryLogic
     public GameObject quickBarGrid;
 
     public QuickBarLogic quickBar;
+
+    new void Awake()
+    {
+        base.Awake();
+    }
+    
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
         
+    }
+
+    protected override void initSlots()
+    {
+        if (slots.Count != 0)
+        {
+            return;
+        }
+        if (Grid.transform.GetChild(0).GetComponent<InventorySlot>() == null)
+        {
+            print("InventorySlot is null");
+            return;
+        }
+        for (int i = 0; i < quickBarGrid.transform.childCount; i++)
+        {
+            slots.Add(quickBarGrid.transform.GetChild(i).GetComponent<InventorySlot>());
+            quickBarGrid.transform.GetChild(i).GetComponent<InventorySlot>().Index = i;
+        }
+        int count = quickBarGrid.transform.childCount;
+        for (int i = 0; i < Grid.transform.childCount; i++)
+        {
+            slots.Add(Grid.transform.GetChild(i).GetComponent<InventorySlot>());
+            Grid.transform.GetChild(i).GetComponent<InventorySlot>().Index = i + count;
+        }
     }
 
     // Update is called once per frame
@@ -20,7 +50,7 @@ public class PlayerInventoryLogic : InventoryLogic
         
     }
     
-    protected override ItemUI findItemUI(InventoryItem item)
+    /*protected override ItemUI findItemUI(InventoryItem item)
     {
         for (int i = 0; i < quickBarGrid.transform.childCount; i++)
         {
@@ -47,11 +77,11 @@ public class PlayerInventoryLogic : InventoryLogic
             }
         }
         return null;
-    }
+    }*/
 
  
     
-    protected override bool creatNewItem(InventoryItem item,int count)
+    /*protected override bool creatNewItem(InventoryItem item,int count)
     {
         for (int i = 0; i < quickBarGrid.transform.childCount; i++)
         {
@@ -74,22 +104,13 @@ public class PlayerInventoryLogic : InventoryLogic
             }
         }
         return false;
-    }
+    }*/
 
     
     public override void updateInventory()
     {
-        for (int i = 0; i < quickBarGrid.transform.childCount; i++)
-        {
-            InventorySlot slot = quickBarGrid.transform.GetChild(i).GetComponent<InventorySlot>();
-            slot.updateSelf();
-        }
-        print("updateInventory");
+        base.updateInventory();
         quickBar.updateSelf(quickBarGrid);
-        for (int i = 0; i < Grid.transform.childCount; i++)
-        {
-            InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
-            slot.updateSelf();
-        }
+       
     }
 }

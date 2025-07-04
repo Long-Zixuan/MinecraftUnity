@@ -4,37 +4,38 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "New MC Inventory", menuName = "MCInventory/Inventory")]
 public class Inventriy : ScriptableObject
 {
-    protected Dictionary<InventoryItem,int> items_ = new Dictionary<InventoryItem, int>();
-    //public Dictionary<InventoryItem,int> Items { get { return items_; } }
-
-    public string inLogicName;
-    // Start is called before the first frame update
-    void Start()
+    public List<ItemData> items_;
+    public void changeItemCount(int index, ItemData data)
     {
-        
+        items_[index] = data;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+}
 
 
-
-    public void changeItemCount(InventoryItem item, int count)
-    {
-        if (items_.ContainsKey(item))
-        {
-            items_[item] += count;
-        }
-        else
-        {
-            items_.Add(item, count);
-        }
-    }
+[System.Serializable]
+public class ItemData
+{
+    [SerializeField] 
+    private InventoryItem item_;
+    [SerializeField] 
+    private int count_;
     
+    public InventoryItem Item
+    {
+        get { return item_; }
+        set { item_ = value; }
+    }
+    public int Count
+    {
+        get { return count_; }
+    }
+    public ItemData(InventoryItem item, int count)
+    {
+        item_ = item;
+        count_ = count;
+    }
 }
