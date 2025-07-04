@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 8610474650724293765}
   - component: {fileID: 7416686331548686261}
   - component: {fileID: 6465204869471869278}
-  - component: {fileID: 311976029056812415}
+  - component: {fileID: 8964138956977840015}
   m_Layer: 0
   m_Name: CraftingTable
   m_TagString: Block
@@ -310,7 +310,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &311976029056812415
+--- !u!114 &8964138956977840015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6369542926203730653}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 376fb80839972d84183868ae455d4337, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c77481526126674daa48ea0af4f3360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTime: 1
@@ -330,6 +330,7 @@ MonoBehaviour:
   brokenSound: {fileID: 0}
   breakingSound: {fileID: 0}
   drop_: {fileID: 8459711182257583488, guid: 7ee20004adda8574597f47208196db6f, type: 3}
+  uiTag: CraftingUI
 --- !u!1 &6419600816764852723
 GameObject:
   m_ObjectHideFlags: 0

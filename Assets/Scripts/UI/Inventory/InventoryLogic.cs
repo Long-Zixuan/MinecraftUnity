@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryLogic : MonoBehaviour
+public class InventoryLogic : BaseUILogic
 {
     public Inventriy inventory_;
 
@@ -21,21 +21,13 @@ public class InventoryLogic : MonoBehaviour
     {
         
         initSlots();
-        /*for (int i = 0; i < inventory_.items_.Count; i++)
-        {
-            print("items");
-            print(inventory_.items_[i]);
-        }*/
+        updateInventory();
+
     }
 
     // Start is called before the first frame update
     protected void Start()
     {
-        /*for (int i = 0; i < Grid.transform.childCount; i++)
-        {
-            slots.Add(Grid.transform.GetChild(i).GetComponent<InventorySlot>());
-            Grid.transform.GetChild(i).GetComponent<InventorySlot>().Index = i;
-        }*/
         updateInventory();
     }
 
@@ -62,65 +54,6 @@ public class InventoryLogic : MonoBehaviour
         
     }
     
-   /* protected virtual bool creatNewItem(InventoryItem item,int count)
-    {
-        for (int i = 0; i < Grid.transform.childCount; i++)
-        {
-            InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
-            if (slot.ItemUi == null)
-            {
-                slot.creatItemUI(item,count);
-                slot.updateSelf();
-                return true;
-            }
-        }
-        return false;
-    }*/
-
-    
-    /*protected virtual ItemUI findItemUI(InventoryItem item)
-    {
-        for (int i = 0; i < Grid.transform.childCount; i++)
-        {
-            InventorySlot slot = Grid.transform.GetChild(i).GetComponent<InventorySlot>();
-            if (slot == null || slot.ItemUi == null)
-            {
-                continue;
-            }
-            if (slot.ItemUi.item_ == item)
-            {
-                return slot.ItemUi;
-            }
-        }
-        return null;
-    }*/
-
-    /*public bool changeItemCount(InventoryItem item, int count,bool creatItemUI = false)
-    {
-        print("changeItemCount"+gameObject.name+"item:"+item.itemName+",count:"+count);
-        if (!creatItemUI)
-        {
-            inventory_.changeItemCount(item, count);
-            return true;
-        }
-        ItemUI itemUI = findItemUI(item);
-        if (itemUI == null)
-        {
-            if (creatNewItem(item,count))
-            {
-                inventory_.changeItemCount(item, count);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        itemUI.ItemCount += count;
-        inventory_.changeItemCount(item, count);
-        updateInventory();
-        return true;
-    }*/
 
     public bool addItem(ItemData data)
     {
@@ -182,4 +115,9 @@ public class InventoryLogic : MonoBehaviour
         updateInventory();
     }
 
+    public override void onOpen()
+    {
+        updateInventory();
+        base.onOpen();
+    }
 }

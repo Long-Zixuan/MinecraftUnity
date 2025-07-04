@@ -94,6 +94,10 @@ public class InventorySlot : MonoBehaviour
             return null;
         }
         ItemUI itemUI = Instantiate(itemUIPre_,transform);
+        if (itemUI == null)
+        {
+            return null;
+        }
         itemUI.Item = item;
         itemUI.ItemCount = count;
 

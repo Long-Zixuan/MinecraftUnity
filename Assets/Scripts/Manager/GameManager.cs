@@ -1,10 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityMC;
 
 public class GameManager : MonoBehaviour
 {
     public InventoryItem[] items;
+
+    private GameObject player;
+
+    public GameObject Player
+    {
+        get
+        {
+            return player;
+        }
+    }
+    
+    public PlauerUIManager playerUIManager;
+
+    public bool CanPlayerMove
+    {
+        get
+        {
+            return playerUIManager.HadUIOpen == false;
+        }
+    }
     
     static private GameManager instance_s;
 
@@ -36,4 +57,16 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    public void onUIOpen()
+    {
+        
+    }
+
+    public void onUIClose()
+    {
+        
+    }
+    
+    
 }

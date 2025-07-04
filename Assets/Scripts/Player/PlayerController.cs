@@ -30,6 +30,10 @@ namespace UnityMC
         {
             get { return inventoryLogic_; }
         }
+        //[SerializeField]
+        //protected PlauerUIManager plauerUIManager_;
+        
+        
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow.")]
         public GameObject cameraTarget;
@@ -137,8 +141,13 @@ namespace UnityMC
 
         private void Update()
         {
+            /*if (plauerUIManager_.HadUIOpen)
+            {
+                canMove_ = false;
+            }*/
             if (!canMove_)
             {
+                character_.SetMovementDirection(Vector3.zero);
                 return;
             }
             checkTargetBlock();
@@ -208,8 +217,13 @@ namespace UnityMC
         
         void tryToggleItem()
         {
+            if (clickedBlock_ && clickedBlock_.OnToggle())
+            {
+                return;
+            }
             if (clickedBlock_ && Vector3.Distance(clickedBlock_.transform.position,transform.position) > 1.6f)
             {
+                
                 Vector3 hitDir = targetRaycastHit.point - clickedBlock_.transform.position;
                 Vector3 offect = newBlockOffect(hitDir);
 

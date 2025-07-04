@@ -11,6 +11,7 @@ TagManager:
   - CraftingSlots
   - itemNumber
   - UI
+  - CraftingUI
   layers:
   - Default
   - TransparentFX

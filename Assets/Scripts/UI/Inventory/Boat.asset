@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6641df4ebd9e0fe4096aa5fd2bb3cc0f, type: 3}
+  m_Name: Boat
+  m_EditorClassIdentifier: 
+  itemName: "\u8239"
+  itemIcon: {fileID: 21300000, guid: dbe3b0158998af24a8c1e2c9493159e6, type: 3}
+  itemPrefab: {fileID: 8459711182257583489, guid: 79bf54c449bb7ef4c8e62ed4fc0366a6,
+    type: 3}
+  recips:
+    items:
+    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
+    - {fileID: 0}
+    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
+    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
+    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
+    - {fileID: 11400000, guid: 0bf3f956c0acee94f9ffcfff28ae4bc7, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    count: 4
+  canCrafting: 1
+  toggleable: 1
+  togglePrefab: {fileID: 5849220019492750586, guid: e39496251e3ddbc48a266ba68761ec34,
+    type: 3}

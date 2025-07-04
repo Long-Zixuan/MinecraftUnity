@@ -75,6 +75,11 @@ public class BaseBlock : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+    public virtual bool OnToggle()
+    {
+        return false;
+    }
     
     
     

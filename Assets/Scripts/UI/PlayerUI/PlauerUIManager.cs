@@ -5,11 +5,25 @@ using UnityEngine.Serialization;
 
 namespace UnityMC
 {
-    public class PlauerUILogic : MonoBehaviour
+    [System.Serializable]
+    public enum UIType
+    {
+        Inventory,
+        Crafting
+    }
+    
+    public class PlauerUIManager : MonoBehaviour
     {
         public PlayerController playerController_;
 
         [FormerlySerializedAs("inventoryUI")] public GameObject inventoryWindow;
+        
+        public GameObject craftingWindow;
+
+        public bool HadUIOpen
+        {
+           get => inventoryWindow.activeSelf || craftingWindow.activeSelf; 
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -27,7 +41,12 @@ namespace UnityMC
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                playerController_.InventoryLogic.updateInventory();
+                if (craftingWindow.activeSelf)
+                {
+                    craftingWindow.SetActive( false);
+                    return;
+                }
+                playerController_.InventoryLogic.onOpen();
                 inventoryWindow.SetActive(!inventoryWindow.activeSelf);
                 Cursor.visible = inventoryWindow.activeSelf;
                 playerController_.CanMove = !inventoryWindow.activeSelf;
