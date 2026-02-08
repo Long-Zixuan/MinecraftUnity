@@ -1,144 +1,113 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
+public class World : MonoBehaviour
+{
+    public int mapSizeInChunks = 6;//用Chunk来衡量地图的大小，每个边多少个Chunk
+    public int chunkSize = 16, chunkHeight = 100;//每个Chunk的大小和高度
+    public int waterThreshold = 50;//水面的高度
+    public float noiseScale = 0.03f;//影响我们的噪声值
+    public GameObject chunkPrefab;//chunkPrefab预制体
+    //存储想要在地图上生成的ChunkData
+    Dictionary<Vector3Int, ChunkData> chunkDataDictionary = new Dictionary<Vector3Int, ChunkData>();
+    //存储地图上Chunk的实体，与上面数据区别
+    Dictionary<Vector3Int, ChunkRenderer> chunkDictionary = new Dictionary<Vector3Int, ChunkRenderer>();
 
-namespace UnityMC {
-
-    [ExecuteInEditMode]
-    public class World : MonoBehaviour
+    void Start()
     {
-
-        public int width;
-        public int height;
-        public int depth;
-        public int seed;
-        [Range(0, 1)] public float treeProbability;
-        public Blocks blocks;
-        
-        public static World instance;
-
-    
-        private void Awake() 
+         GenerateWorld();
+    }
+    public void GenerateWorld()
+    {
+        chunkDataDictionary.Clear();
+        foreach (ChunkRenderer chunk in chunkDictionary.Values)
         {
-            instance = this;
-            //Generate();
+            Destroy(chunk.gameObject);
         }
-        
-        [ContextMenu("生成地形")]
-        public void Generate() 
+        chunkDictionary.Clear();
+        //以上代码是为了在生成前清空地图，防止意外发生
+/***************************开始地形生成******************************/
+        for (int x = 0; x < mapSizeInChunks; x++)
         {
-            Clean();
-
-            Random.InitState(seed);
-
-
-            for (float x = -(width/2); x < width / 2; x++) {
-
-                for (float z = -(depth/2); z < depth / 2; z++) {
-
-                    int y = (int)(Mathf.PerlinNoise((x / 2 + seed) / 10, (z / 2 + seed) / 10) * 10);
-
-                    BaseBlock block = Instantiate(blocks.grass, new Vector3(x, y, z), Quaternion.identity);
-                    
-                    block.transform.SetParent(transform);
-
-                    Vector3 grassPosition = new Vector3(x, y, z) - new Vector3(0, 2, 0);
-
-                    CreateBlockLine(new Vector3(x, y, z), grassPosition, blocks.dirt);
-
-
-                    Vector3 stonePosition = new Vector3(x, -height + 1, z);
-
-                    CreateBlockLine(grassPosition, stonePosition, blocks.stone);
-
-
-                    Vector3 bedrockPosition = new Vector3(x, -height, z);
-
-                    CreateBlockLine(stonePosition, bedrockPosition, blocks.bedrock);
-
-
-                    Vector3 treePosition = new Vector3(x, y, z);
-
-                    if (Random.Range(0, 1f) < treeProbability) { CreateTree(treePosition); }
-
-                }
-
+            for (int z = 0; z < mapSizeInChunks; z++)
+            {
+                //初始化一个Chunk，然后在一个Chunk里面循环创建Voxel并添加到字典里面
+                ChunkData data = new ChunkData(chunkSize, chunkHeight, this, new Vector3Int(x * chunkSize, 0, z * chunkSize));
+                GenerateVoxels(data);
+                chunkDataDictionary.Add(data.worldPosition, data);
             }
-
         }
-
-        public void CreateBlockLine(Vector3 from, Vector3 to, BaseBlock prefab) {
-
-            Vector3 position = from;
-
-            do {
-
-                if (position.y < to.y) { position.y++; }
-
-                if (position.y > to.y) { position.y--; }
-
-                BaseBlock block = Instantiate(prefab, new Vector3(position.x, position.y, position.z), Quaternion.identity);
-
-                block.transform.SetParent(transform);
-                
-                block.transform.SetParent(transform);
-
-            } while (position != to);
-
-        }
-
-        public void CreateTree(Vector3 position) {
-
-            CreateBlockLine(position, position + Vector3.up * 4, blocks.log);
-
-            // Leaves
-
-            Vector3[] relativePositions = new Vector3[] { new Vector3(1, 2, 0), new Vector3(1, 3, 0), 
-                new Vector3(1, 4, 0), new Vector3(-1, 2, 0), new Vector3(-1, 3, 0), new Vector3(-1, 4, 0),
-                new Vector3(0, 2, 1), new Vector3(0, 3, 1), new Vector3(0, 4, 1), new Vector3(0, 2, -1),
-                new Vector3(0, 3, -1), new Vector3(0, 4, -1), new Vector3(0, 4, 0), new Vector3(1, 2, 1),
-                new Vector3(1, 3, 1), new Vector3(1, 2, -1), new Vector3(1, 3, -1), new Vector3(-1, 2, -1),
-                new Vector3(-1, 3, -1), new Vector3(-1, 2, 1), new Vector3(-1, 3, 1) };
-
-            foreach (Vector3 relativePosition in relativePositions) {
-
-                Instantiate(blocks.leaves, position + Vector3.up + relativePosition, Quaternion.identity, parent: transform);
-
-            }
-
-        }
-
-        public void Clean() {
-
-            while (transform.childCount > 0) {
-
-                DestroyImmediate(transform.GetChild(0).gameObject);
-
-            }
-
-        }
-
-
-        [System.Serializable]
-        public struct Blocks {
-
-            public BaseBlock grass;
-            public BaseBlock dirt;
-            public BaseBlock stone;
-            public BaseBlock bedrock;
-            public BaseBlock log;
-            public BaseBlock leaves;
+        //根据前面循环生成的地形数据(每个Chunk的信息)生成地形
+        foreach (ChunkData data in chunkDataDictionary.Values)
+        {
+            MeshData meshData = Chunk.GetChunkMeshData(data);
+            GameObject chunkObject = Instantiate(chunkPrefab, data.worldPosition, Quaternion.identity);
+            ChunkRenderer chunkRenderer = chunkObject.GetComponent<ChunkRenderer>();
+            chunkDictionary.Add(data.worldPosition, chunkRenderer);
+            chunkRenderer.InitializeChunk(data);
+            chunkRenderer.UpdateChunk(meshData);
 
         }
     }
-   /* [System.Serializable]
-    public enum BlockType
+    //这里是对Chunk细化到Chunk内部每一个Block处理
+    private void GenerateVoxels(ChunkData data)
     {
-        Grass,
-        Dirt,
-        Stone,
-        Bedrock,
-        Log,
-        Leaves
-    }*/
+        //遍历Chunk(本地坐标系)
+        for (int x = 0; x < data.chunkSize; x++)
+        {
+            for (int z = 0; z < data.chunkSize; z++)
+            {
+                //对每个坐标生成一个随机高度值(为什么使用噪声，第一篇文章已经讲过了)
+                float noiseValue = Mathf.PerlinNoise((data.worldPosition.x + x) * noiseScale, (data.worldPosition.z + z) * noiseScale);
+                int groundPosition = Mathf.RoundToInt(noiseValue * chunkHeight);
+                //知道该坐标的地面高度，循环遍历该坐标的所有Block
+                for (int y = 0; y < chunkHeight; y++)
+                {
+                    BlockType voxelType = BlockType.Dirt;
+                    //如果在地面上，进一步讨论
+                    if (y > groundPosition)
+                    {
+                    //地面在水下，那么地面上和水下之间的Block都应该是Water
+                        if (y < waterThreshold)
+                        {
+                            voxelType = BlockType.Water;
+                        }
+                    //在地面上由在水面上，自然都是空气
+                        else
+                        {
+                            voxelType = BlockType.Air;
+                        }
 
+                    }
+                    //水下的地面使用Sand类型的Block
+                    else if (y == groundPosition && y < waterThreshold)
+                    {
+                        voxelType = BlockType.Sand;
+                    }
+                    //默认的地面是Grass_Dirt类型的Block
+                    else if (y == groundPosition)
+                    {
+                        voxelType = BlockType.Grass_Dirt;
+                    }
+
+                    Chunk.SetBlock(data, new Vector3Int(x, y, z), voxelType);
+                }
+            }
+        }
+    }
+    //辅助方法，在Chunk类中用到
+    internal BlockType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
+    {
+        Vector3Int pos = Chunk.ChunkPositionFromBlockCoords(this, x, y, z);
+        ChunkData containerChunk = null;
+
+        chunkDataDictionary.TryGetValue(pos, out containerChunk);
+
+        if (containerChunk == null)
+            return BlockType.Nothing;
+        Vector3Int blockInCHunkCoordinates = Chunk.GetBlockInChunkCoordinates(containerChunk, new Vector3Int(x, y, z));
+        return Chunk.GetBlockFromChunkCoordinates(containerChunk, blockInCHunkCoordinates);
+    }
 }

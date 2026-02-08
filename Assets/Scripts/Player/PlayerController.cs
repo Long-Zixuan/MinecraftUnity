@@ -64,7 +64,7 @@ namespace UnityMC
         
         private float _cameraTargetPitch;
 
-        private BaseBlock clickedBlock_ = null;
+        //private BaseBlock clickedBlock_ = null;
         RaycastHit targetRaycastHit;
 
         public float range;
@@ -216,12 +216,12 @@ namespace UnityMC
 
         void tryBreakBlock()
         {
-            if(clickedBlock_!=null){clickedBlock_.tryBreak();}
+            //if(clickedBlock_!=null){clickedBlock_.tryBreak();}
         }
         
         void tryToggleItem()
         {
-            if (clickedBlock_ && clickedBlock_.OnToggle())
+            /*if (clickedBlock_ && clickedBlock_.OnToggle())
             {
                 return;
             }
@@ -249,7 +249,7 @@ namespace UnityMC
                 
                 slots.updateInventoryData(slots.Data.Item,slots.Data.Count - 1);
                 inventoryLogic_.updateInventory();
-            }
+            }*/
         }
 
         Vector3 newBlockOffect(Vector3 vec3)
@@ -293,7 +293,7 @@ namespace UnityMC
         
         void checkTargetBlock() {
 
-            RaycastHit hit;
+            /*RaycastHit hit;
             BaseBlock targetBlock = null;
             Ray ray = character_.camera.ScreenPointToRay(Input.mousePosition);
 
@@ -322,7 +322,7 @@ namespace UnityMC
                     targetBlock.OnBlockSelected();
                 }
                 clickedBlock_ = targetBlock;
-            }
+            }*/
 
         }
     }
