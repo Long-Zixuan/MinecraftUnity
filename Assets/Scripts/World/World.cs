@@ -13,7 +13,7 @@ namespace UnityMC {
         public int seed;
         [Range(0, 1)] public float treeProbability;
         public Blocks blocks;
-
+        
         public static World instance;
 
     
@@ -38,9 +38,8 @@ namespace UnityMC {
                     int y = (int)(Mathf.PerlinNoise((x / 2 + seed) / 10, (z / 2 + seed) / 10) * 10);
 
                     BaseBlock block = Instantiate(blocks.grass, new Vector3(x, y, z), Quaternion.identity);
-
+                    
                     block.transform.SetParent(transform);
-
 
                     Vector3 grassPosition = new Vector3(x, y, z) - new Vector3(0, 2, 0);
 
@@ -79,6 +78,8 @@ namespace UnityMC {
 
                 BaseBlock block = Instantiate(prefab, new Vector3(position.x, position.y, position.z), Quaternion.identity);
 
+                block.transform.SetParent(transform);
+                
                 block.transform.SetParent(transform);
 
             } while (position != to);
@@ -128,7 +129,16 @@ namespace UnityMC {
             public BaseBlock leaves;
 
         }
-
     }
+   /* [System.Serializable]
+    public enum BlockType
+    {
+        Grass,
+        Dirt,
+        Stone,
+        Bedrock,
+        Log,
+        Leaves
+    }*/
 
 }
