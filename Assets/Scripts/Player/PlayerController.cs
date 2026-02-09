@@ -72,9 +72,9 @@ namespace UnityMC
         
         ChunkRenderer chunkRenderer_ = null;
         ChunkData chunkData_ = null;
-        Vector3Int targetPos_;
 
-        private Vector3 offect;//凑合一下
+        private Vector3 hitPos;
+        private Vector3 hitDir;
         
         /// <summary>
         /// Add input (affecting Yaw).
@@ -226,8 +226,11 @@ namespace UnityMC
             //if(clickedBlock_!=null){clickedBlock_.tryBreak();}
             if (chunkData_ != null)
             {
-                
-                Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos_);
+                Vector3 pos = hitPos;
+                pos += BlockOffect(hitDir);
+                Vector3Int targetPos = new Vector3Int
+                    { x = Mathf.RoundToInt(pos.x), y = Mathf.RoundToInt(pos.y), z = Mathf.RoundToInt(pos.z) };
+                Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos);
                 print(Chunk.GetBlockTypeWithLocalPos(chunkData_,blockLocalPos));
                 Chunk.SetBlock(chunkData_,blockLocalPos,BlockType.Air);
                 chunkRenderer_.UpdateChunk();
@@ -238,9 +241,12 @@ namespace UnityMC
         {
             if (chunkData_ != null)
             {
-                Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos_);
-                Chunk.SetBlock(chunkData_,blockLocalPos - new Vector3Int(Convert.ToInt32(offect.x * 2), 
-                    Convert.ToInt32(offect.y * 2), Convert.ToInt32(offect.z * 2)),BlockType.Stone);//凑合一下，逻辑测试罢了
+                Vector3 pos = hitPos;
+                pos -= BlockOffect(hitDir);
+                Vector3Int targetPos = new Vector3Int
+                    { x = Mathf.RoundToInt(pos.x), y = Mathf.RoundToInt(pos.y), z = Mathf.RoundToInt(pos.z) };
+                Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos);
+                Chunk.SetBlock(chunkData_,blockLocalPos,BlockType.Stone);
                 chunkRenderer_.UpdateChunk();
             }
             /*if (clickedBlock_ && clickedBlock_.OnToggle())
@@ -335,12 +341,8 @@ namespace UnityMC
 
                 chunkRenderer_ = objectHit.GetComponent<ChunkRenderer>();
                 chunkData_ = chunkRenderer_.ChunkData;
-                Vector3 point = hit.point;
-                Vector3 hitDir = point - (transform.position + new Vector3(0,1.54f,0));
-                offect = BlockOffect(hitDir);
-                point += offect;
-                targetPos_ = new Vector3Int
-                    { x = Mathf.RoundToInt(point.x), y = Mathf.RoundToInt(point.y), z = Mathf.RoundToInt(point.z) };
+                hitPos = hit.point;
+                hitDir = hit.point - (transform.position + new Vector3(0,1.54f,0));
             }
 
             /*if (clickedBlock_ != targetBlock)
