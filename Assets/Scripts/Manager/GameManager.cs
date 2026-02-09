@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityMC;
 
 public class GameManager : MonoBehaviour
 {
     public World world;
+    public GameObject worldPrefabs;
     public InventoryItem[] items;
 
     [SerializeField]
@@ -47,14 +49,21 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance_s = this;
+        if (world == null)
+        {
+            world = findWorldObj();
+            world.transform.position = Vector3.zero;
+        }
+
+        if (world == null)
+        {
+            world = creatWorldObj();
+        }
     }
     // Start is called before the first frame update
     void Start()
     {
-        if (world == null)
-        {
-            world = findWorldObj();
-        }
+        
     }
 
     // Update is called once per frame
@@ -76,6 +85,13 @@ public class GameManager : MonoBehaviour
     private World findWorldObj()
     {
         return GameObject.Find("World").GetComponent<World>();
+    }
+
+    private World creatWorldObj()
+    {
+        GameObject worldObj = Instantiate(worldPrefabs,Vector3.zero,Quaternion.identity);
+        World w = worldObj.AddComponent<World>();
+        return w;
     }
     
 }
