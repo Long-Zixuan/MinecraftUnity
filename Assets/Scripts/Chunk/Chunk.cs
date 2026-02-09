@@ -133,9 +133,9 @@ public static class Chunk
     {
         Vector3Int pos = new Vector3Int
         {
-            x = Mathf.FloorToInt(x / (float)world.chunkSize) * world.chunkSize,
-            y = Mathf.FloorToInt(y / (float)world.chunkHeight) * world.chunkHeight,
-            z = Mathf.FloorToInt(z / (float)world.chunkSize) * world.chunkSize
+            x = Mathf.FloorToInt(x / (float)World.chunkSize) * World.chunkSize,
+            y = Mathf.FloorToInt(y / (float)World.chunkHeight) * World.chunkHeight,
+            z = Mathf.FloorToInt(z / (float)World.chunkSize) * World.chunkSize
         };
         return pos;
     }

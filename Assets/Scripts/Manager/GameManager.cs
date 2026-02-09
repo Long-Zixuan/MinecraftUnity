@@ -5,6 +5,7 @@ using UnityMC;
 
 public class GameManager : MonoBehaviour
 {
+    public World world;
     public InventoryItem[] items;
 
     [SerializeField]
@@ -50,7 +51,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (world == null)
+        {
+            world = findWorldObj();
+        }
     }
 
     // Update is called once per frame
@@ -68,6 +72,10 @@ public class GameManager : MonoBehaviour
     {
         
     }
-    
+
+    private World findWorldObj()
+    {
+        return GameObject.Find("World").GetComponent<World>();
+    }
     
 }

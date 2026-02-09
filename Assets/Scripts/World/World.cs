@@ -6,7 +6,7 @@ using UnityEngine;
 public class World : MonoBehaviour
 {
     public int mapSizeInChunks = 6;//用Chunk来衡量地图的大小，每个边多少个Chunk
-    public int chunkSize = 16, chunkHeight = 100;//每个Chunk的大小和高度
+    public const int chunkSize = 16, chunkHeight = 100;//每个Chunk的大小和高度
     public int waterThreshold = 50;//水面的高度
     public float noiseScale = 0.03f;//影响我们的噪声值
     public GameObject chunkPrefab;//chunkPrefab预制体
@@ -109,5 +109,57 @@ public class World : MonoBehaviour
             return BlockType.Nothing;
         Vector3Int blockInCHunkCoordinates = Chunk.GetBlockInChunkCoordinates(containerChunk, new Vector3Int(x, y, z));
         return Chunk.GetBlockFromChunkCoordinates(containerChunk, blockInCHunkCoordinates);
+    }
+
+    public void tryUpdateChunkWithIndex(Vector3Int index)
+    {
+        if (chunkDictionary.ContainsKey((index)))
+        {
+            chunkDictionary[index].UpdateChunk();
+        }
+    }
+
+    public void SetBlockWithWorldPos(Vector3Int pos, BlockType type)
+    {
+        int x = pos.x / chunkSize * chunkSize;
+        int z = pos.z / chunkSize * chunkSize;
+        ChunkData chunkData = chunkDataDictionary[new Vector3Int(x, 0, z)];
+        ChunkRenderer chunkRenderer = chunkDictionary[new Vector3Int(x, 0, z)];
+        Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData,pos);
+        Chunk.SetBlock(chunkData,blockLocalPos,type);
+        chunkRenderer.UpdateChunk();
+
+        switch (blockLocalPos.x)
+        {
+            case 0: 
+                tryUpdateChunkWithIndex(new Vector3Int(x - chunkSize, 0, z));
+                break;
+            case chunkSize - 1:
+                tryUpdateChunkWithIndex(new Vector3Int(x + chunkSize, 0, z));
+                break;
+            default:
+                break;
+        }
+
+        switch (blockLocalPos.z)
+        {
+            case 0: 
+                tryUpdateChunkWithIndex(new Vector3Int(x , 0, z - chunkSize));
+                break;
+            case chunkSize - 1:
+                tryUpdateChunkWithIndex(new Vector3Int(x , 0, z + chunkSize));
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public BlockType GetBlockTypeWithWorldPos(Vector3Int pos)
+    {
+        int x = pos.x / chunkSize * chunkSize;
+        int z = pos.z / chunkSize * chunkSize;
+        ChunkData chunkData = chunkDataDictionary[new Vector3Int(x, 0, z)];
+        Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData,pos);
+        return Chunk.GetBlockTypeWithLocalPos(chunkData, blockLocalPos);
     }
 }

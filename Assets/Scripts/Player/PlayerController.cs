@@ -230,10 +230,12 @@ namespace UnityMC
                 pos += BlockOffect(hitDir);
                 Vector3Int targetPos = new Vector3Int
                     { x = Mathf.RoundToInt(pos.x), y = Mathf.RoundToInt(pos.y), z = Mathf.RoundToInt(pos.z) };
-                Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos);
+                print(GameManager.Instance.world.GetBlockTypeWithWorldPos(targetPos));
+                GameManager.Instance.world.SetBlockWithWorldPos(targetPos, BlockType.Air);
+                /*Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos);
                 print(Chunk.GetBlockTypeWithLocalPos(chunkData_,blockLocalPos));
                 Chunk.SetBlock(chunkData_,blockLocalPos,BlockType.Air);
-                chunkRenderer_.UpdateChunk();
+                chunkRenderer_.UpdateChunk();*/
             }
         }
         
@@ -245,9 +247,8 @@ namespace UnityMC
                 pos -= BlockOffect(hitDir);
                 Vector3Int targetPos = new Vector3Int
                     { x = Mathf.RoundToInt(pos.x), y = Mathf.RoundToInt(pos.y), z = Mathf.RoundToInt(pos.z) };
-                Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos);
-                Chunk.SetBlock(chunkData_,blockLocalPos,BlockType.Stone);
-                chunkRenderer_.UpdateChunk();
+                print(GameManager.Instance.world.GetBlockTypeWithWorldPos(targetPos));
+                GameManager.Instance.world.SetBlockWithWorldPos(targetPos, BlockType.Stone);
             }
             /*if (clickedBlock_ && clickedBlock_.OnToggle())
             {
