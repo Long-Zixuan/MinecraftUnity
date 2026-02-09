@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using ECM2;
 using UnityEditor;
 using UnityEngine.Serialization;
@@ -72,6 +73,8 @@ namespace UnityMC
         ChunkRenderer chunkRenderer_ = null;
         ChunkData chunkData_ = null;
         Vector3Int targetPos_;
+
+        private Vector3 offect;//凑合一下
         
         /// <summary>
         /// Add input (affecting Yaw).
@@ -233,6 +236,13 @@ namespace UnityMC
         
         void tryToggleItem()
         {
+            if (chunkData_ != null)
+            {
+                Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos_);
+                Chunk.SetBlock(chunkData_,blockLocalPos - new Vector3Int(Convert.ToInt32(offect.x * 2), 
+                    Convert.ToInt32(offect.y * 2), Convert.ToInt32(offect.z * 2)),BlockType.Stone);//凑合一下，逻辑测试罢了
+                chunkRenderer_.UpdateChunk();
+            }
             /*if (clickedBlock_ && clickedBlock_.OnToggle())
             {
                 return;
@@ -327,7 +337,7 @@ namespace UnityMC
                 chunkData_ = chunkRenderer_.ChunkData;
                 Vector3 point = hit.point;
                 Vector3 hitDir = point - (transform.position + new Vector3(0,1.54f,0));
-                Vector3 offect = BlockOffect(hitDir);
+                offect = BlockOffect(hitDir);
                 point += offect;
                 targetPos_ = new Vector3Int
                     { x = Mathf.RoundToInt(point.x), y = Mathf.RoundToInt(point.y), z = Mathf.RoundToInt(point.z) };
