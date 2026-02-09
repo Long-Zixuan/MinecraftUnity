@@ -69,6 +69,10 @@ namespace UnityMC
 
         public float range;
         
+        ChunkRenderer chunkRenderer_ = null;
+        ChunkData chunkData_ = null;
+        Vector3Int targetPos_;
+        
         /// <summary>
         /// Add input (affecting Yaw).
         /// This is applied to the Character's rotation.
@@ -217,6 +221,14 @@ namespace UnityMC
         void tryBreakBlock()
         {
             //if(clickedBlock_!=null){clickedBlock_.tryBreak();}
+            if (chunkData_ != null)
+            {
+                
+                Vector3Int blockLocalPos = Chunk.GetBlockInChunkCoordinates(chunkData_,targetPos_);
+                print(Chunk.GetBlockTypeWithLocalPos(chunkData_,blockLocalPos));
+                Chunk.SetBlock(chunkData_,blockLocalPos,BlockType.Air);
+                chunkRenderer_.UpdateChunk();
+            }
         }
         
         void tryToggleItem()
@@ -229,7 +241,7 @@ namespace UnityMC
             {
                 
                 Vector3 hitDir = targetRaycastHit.point - clickedBlock_.transform.position;
-                Vector3 offect = newBlockOffect(hitDir);
+                Vector3 offect = BlockOffect(hitDir);
 
                
                 InventorySlot slots = inventoryLogic_.Slots[0];
@@ -252,9 +264,9 @@ namespace UnityMC
             }*/
         }
 
-        Vector3 newBlockOffect(Vector3 vec3)
+        Vector3 BlockOffect(Vector3 vec3)
         {
-            print("Dir:"+vec3);
+            //print("Dir:"+vec3);
             float[] vals = new float[3];
             vals[0] = vec3.x;
             vals[1] = vec3.y;
@@ -276,11 +288,11 @@ namespace UnityMC
                 {
                     if (vals[i] > 0)
                     {
-                        vals[i] = 1;
+                        vals[i] = 0.5f;
                     }
                     else
                     {
-                        vals[i] = -1;
+                        vals[i] = -0.5f;
                     }
                 }
                 else
@@ -288,14 +300,18 @@ namespace UnityMC
                     vals[i] = 0;
                 }
             }
+            print(new Vector3(vals[0],vals[1],vals[2]));
             return new Vector3(vals[0], vals[1], vals[2]);
         }
         
         void checkTargetBlock() {
 
-            /*RaycastHit hit;
-            BaseBlock targetBlock = null;
+            RaycastHit hit;
+            
             Ray ray = character_.camera.ScreenPointToRay(Input.mousePosition);
+
+            chunkData_ = null;
+            chunkRenderer_ = null;
 
             if (Physics.Raycast(ray, out hit)) {
 
@@ -303,14 +319,21 @@ namespace UnityMC
 
                 targetRaycastHit = hit;
 
-                if (!objectHit.GetComponent<BaseBlock>()) { return; }
+                if (!objectHit.GetComponent<ChunkRenderer>()) { return; }
 
-                if (Vector3.Distance(transform.position, objectHit.position) > range) { return; }
+                if (Vector3.Distance(transform.position, hit.point) > range) { return; }
 
-                targetBlock = objectHit.GetComponent<BaseBlock>();
+                chunkRenderer_ = objectHit.GetComponent<ChunkRenderer>();
+                chunkData_ = chunkRenderer_.ChunkData;
+                Vector3 point = hit.point;
+                Vector3 hitDir = point - (transform.position + new Vector3(0,1.54f,0));
+                Vector3 offect = BlockOffect(hitDir);
+                point += offect;
+                targetPos_ = new Vector3Int
+                    { x = Mathf.RoundToInt(point.x), y = Mathf.RoundToInt(point.y), z = Mathf.RoundToInt(point.z) };
             }
 
-            if (clickedBlock_ != targetBlock)
+            /*if (clickedBlock_ != targetBlock)
             {
                 if (clickedBlock_ != null)
                 {

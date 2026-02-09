@@ -61,6 +61,18 @@ public static class Chunk
 
         return chunkData.worldReference.GetBlockFromChunkCoordinates(chunkData, chunkData.worldPosition.x + x, chunkData.worldPosition.y + y, chunkData.worldPosition.z + z);
     }
+
+    public static BlockType GetBlockTypeWithLocalPos(ChunkData chunkData, Vector3Int localPosition)
+    {
+        int index = GetIndexFromPosition(chunkData, localPosition.x, localPosition.y, localPosition.z);
+        if (InRange(chunkData, localPosition.x) && InRangeHeight(chunkData, localPosition.y) && InRange(chunkData, localPosition.z))
+        {
+            return chunkData.blocks[index];
+        }
+        return chunkData.worldReference.GetBlockFromChunkCoordinates(chunkData, 
+            chunkData.worldPosition.x + localPosition.x, chunkData.worldPosition.y + localPosition.y, 
+            chunkData.worldPosition.z + localPosition.z);
+    }
     //设置Block的类型
     public static void SetBlock(ChunkData chunkData, Vector3Int localPosition, BlockType block)
     {
@@ -90,6 +102,11 @@ public static class Chunk
     private static int GetIndexFromPosition(ChunkData chunkData, int x, int y, int z)
     {
         return x + chunkData.chunkSize * y + chunkData.chunkSize * chunkData.chunkHeight * z;
+    }
+    
+    private static int GetIndexFromPosition(ChunkData chunkData, Vector3Int pos)
+    {
+        return pos.x + chunkData.chunkSize * pos.y + chunkData.chunkSize * chunkData.chunkHeight * pos.z;
     }
     //根据Chunk坐标系的坐标得到对应的Block
     public static Vector3Int GetBlockInChunkCoordinates(ChunkData chunkData, Vector3Int pos)
